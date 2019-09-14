@@ -1,0 +1,17 @@
+<p>login works!</p>
+<ng-container *ngIf="adminService.admin !== null">
+    {{ adminService.admin | json }}
+  <form class="example-form">
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Favorite food" name="momo" [(ngModel)]="adminService.admin.name">
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="adminService.adminUpdate()">Update</button>
+  </form>
+</ng-container>
+
+<firebase-ui (signInSuccessWithAuthResult)="successCallback($event)" (signInFailure)="errorCallback($event)">
+</firebase-ui>
+
+
+
+<button (click)="logout()">Logout</button>
