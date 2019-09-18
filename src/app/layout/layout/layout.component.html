@@ -1,0 +1,30 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
+      <span class="spacer"></span>
+      <span>Third Line</span>
+      <span class="spacer"></span>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <mat-sidenav-container class="sidenav-container" autosize>
+    <mat-sidenav mode="over" autoFocus="false" fixedTopGap="56" fixedBottomGap="0" fixedInViewport="true" #sidenav>
+      <mat-list>
+        <mat-list-item>
+          <button mat-button class="btn-block" routerLink="/" (click)="sidenav.toggle()">
+            <mat-icon>home</mat-icon>&nbsp; 主頁面
+          </button>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+            <button mat-button class="btn-block" routerLink="/replyList" (click)="sidenav.toggle()">
+              <mat-icon>home</mat-icon>&nbsp; 自動回覆
+            </button>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+      </mat-list>
+    </mat-sidenav>
+    <div class="router-outlet">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-container>
