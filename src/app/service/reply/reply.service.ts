@@ -17,7 +17,6 @@ export class ReplyService {
   }
 
   replyAdd() {
-    console.log(this.adminService.admin);
     const uid = this.adminService.admin.uid;
     return this.db.collection('linebot/1602425210/reply').doc('aaa').set({ type: 'text', text: 'GG', allowUsers: [uid] });
   }

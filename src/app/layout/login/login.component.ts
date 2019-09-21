@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { FirebaseUISignInSuccessWithAuthResult, FirebaseUISignInFailure } from 'firebaseui-angular';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AdminService } from 'src/app/service/admin/admin.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,21 +11,15 @@ import { AdminService } from 'src/app/service/admin/admin.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  items: any = {};
   constructor(
     private db: AngularFirestore,
     private afAuth: AngularFireAuth,
     public adminService: AdminService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
     this.adminService.adminGetByAuthState();
-    console.log('items.reply', this.items.reply);
-    this.db.collection('linebot').doc('1602425210').get().subscribe(
-      (v) => {
-        this.items = v.data();
-      }
-    );
   }
 
   successCallback(succ: FirebaseUISignInSuccessWithAuthResult) {
@@ -45,6 +40,7 @@ export class LoginComponent implements OnInit {
           };
           this.db.collection('linebot/1602425210/admin').doc(userUid).set(admin);
         }
+        this.router.navigateByUrl(this.adminService.redirectUrl);
       }
     );
   }
