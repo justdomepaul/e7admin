@@ -1,0 +1,17 @@
+<div class="container">
+  <h4>新增自動回應</h4>
+  <mat-form-field>
+    <mat-label>回覆樣板</mat-label>
+    <mat-select [(ngModel)]="message" name="message">
+      <mat-option *ngFor="let template of messageTemplates" [value]="template.structure">
+        {{template.type}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>回應關鍵字</mat-label>
+    <input matInput placeholder="Placeholder">
+  </mat-form-field>
+
+</div>

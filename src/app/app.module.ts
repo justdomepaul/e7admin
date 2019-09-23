@@ -14,7 +14,6 @@ import { MaterialModule } from './module/material/material.module';
 
 import { FirebaseUIModule, firebase, firebaseui } from 'firebaseui-angular';
 import { LayoutComponent } from './layout/layout/layout.component';
-import { ReplyListComponent } from './page/reply/reply-list/reply-list.component';
 
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
   signInFlow: 'popup',
@@ -31,7 +30,6 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
     AppComponent,
     LoginComponent,
     LayoutComponent,
-    ReplyListComponent
   ],
   imports: [
     BrowserModule,
