@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>回覆的關鍵字</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <input matInput name="replyKeyWold" [(ngModel)]="replyKeyWold" placeholder="回覆的關鍵字">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="dialogRef.close();">取消</button>
+  <button mat-raised-button color="primary" [disabled]="replyKeyWold==''" [mat-dialog-close]="replyKeyWold">新增</button>
+</div>

@@ -14,6 +14,7 @@ import { MaterialModule } from './module/material/material.module';
 
 import { FirebaseUIModule, firebase, firebaseui } from 'firebaseui-angular';
 import { LayoutComponent } from './layout/layout/layout.component';
+import { ModalInputComponent } from './common/modal/modal-input/modal-input.component';
 
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
   signInFlow: 'popup',
@@ -30,6 +31,7 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
     AppComponent,
     LoginComponent,
     LayoutComponent,
+    ModalInputComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,6 +44,7 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
     FirebaseUIModule.forRoot(firebaseUiAuthConfig),
     MaterialModule,
   ],
+  entryComponents: [ModalInputComponent],
   providers: [],
   bootstrap: [AppComponent]
 })
