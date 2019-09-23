@@ -5,6 +5,12 @@
   </button>
 
   <p (click)="addReply()">modalService Open</p>
+
+  <ng-container *ngFor="let reply of replyLists">
+    <a [routerLink]="[ '/replyList', 'edit',reply.id ]">{{reply.id}}</a>
+  </ng-container>
+
+
   <pre>
   {{replyLists | json}}
 </pre>

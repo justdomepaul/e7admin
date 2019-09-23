@@ -18,6 +18,10 @@ export class ReplyService {
     return this.db.collection('linebot').doc('1602425210').get();
   }
 
+  replyGetById(replyId: string) {
+    return this.db.collection('linebot/1602425210/reply').doc(replyId).valueChanges();
+  }
+
   replyAdd(newKeyword: string): Promise<any> {
     return new Promise((resolve, reject) => {
       this.db.collection('linebot/1602425210/reply', ref => ref.where('text', '==', newKeyword)).get().subscribe(
@@ -26,10 +30,12 @@ export class ReplyService {
           if (v.empty === true) {
             const uid = this.adminService.admin.uid;
             this.db.collection('linebot/1602425210/reply').add({
-              type: 'text',
-              text: newKeyword,
               keyword: newKeyword,
-              allowUsers: [uid]
+              allowUsers: [uid],
+              template: {
+                type: 'text',
+                text: newKeyword,
+              },
             });
           } else {
             this.snackBar.open(newKeyword + ' 關鍵字已經存在', '', { duration: 2000 }).afterDismissed();
