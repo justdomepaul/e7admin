@@ -1,17 +1,15 @@
 <div class="container mtop">
-  <button mat-raised-button color="primary" class="btn-block" routerLink="add">
+  <button mat-raised-button color="primary" class="btn-block" (click)="addReply()">
     新增自動回覆
     <mat-icon>add</mat-icon>
   </button>
 
-  <p (click)="addReply()">modalService Open</p>
-
   <ng-container *ngFor="let reply of replyLists">
-    <a [routerLink]="[ '/replyList', 'edit',reply.id ]">{{reply.id}}</a>
+    <mat-list-item>
+      <a [routerLink]="[ '/replyList', 'edit',reply.id ]">
+        <h4 mat-line>{{reply.data.keyword}}</h4>
+      </a>
+    </mat-list-item>
+    <mat-divider></mat-divider>
   </ng-container>
-
-
-  <pre>
-  {{replyLists | json}}
-</pre>
 </div>

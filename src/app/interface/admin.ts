@@ -7,4 +7,5 @@ export interface Admin {
   phoneNumber: string;
   photoURL: string;
   role: string;
+  channelID: string;
 }

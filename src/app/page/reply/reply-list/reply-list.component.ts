@@ -19,6 +19,7 @@ export class ReplyListComponent implements OnInit {
     this.replyLists = [];
     this.replyService.replyWhere().subscribe(
       (v) => {
+        console.log('vvvvv', v);
         v.forEach(ele => {
           this.replyLists.push(
             { id: ele.id, data: ele.data() },

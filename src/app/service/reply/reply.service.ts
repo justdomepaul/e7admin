@@ -7,29 +7,31 @@ import { MatSnackBar } from '@angular/material';
   providedIn: 'root'
 })
 export class ReplyService {
-
   constructor(
     private db: AngularFirestore,
     private adminService: AdminService,
     private snackBar: MatSnackBar,
   ) { }
 
-  replyGetList() {
-    return this.db.collection('linebot').doc('1602425210').get();
+  replyGetById(replyId: string) {
+    const channelID = this.adminService.admin.channelID;
+    return this.db.collection(`linebot/${channelID}/reply`).doc(replyId).valueChanges();
   }
 
-  replyGetById(replyId: string) {
-    return this.db.collection('linebot/1602425210/reply').doc(replyId).valueChanges();
+  replyUpdateById(replyId: string, reply: any) {
+    const channelID = this.adminService.admin.channelID;
+    return this.db.collection(`linebot/${channelID}/reply`).doc(replyId).update(reply);
   }
 
   replyAdd(newKeyword: string): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.db.collection('linebot/1602425210/reply', ref => ref.where('text', '==', newKeyword)).get().subscribe(
+      const channelID = this.adminService.admin.channelID;
+      this.db.collection(`linebot/${channelID}/reply`, ref => ref.where('text', '==', newKeyword)).get().subscribe(
         (v) => {
           // 已經存在
           if (v.empty === true) {
             const uid = this.adminService.admin.uid;
-            this.db.collection('linebot/1602425210/reply').add({
+            this.db.collection(`linebot/${channelID}/reply`).add({
               keyword: newKeyword,
               allowUsers: [uid],
               template: {
@@ -49,6 +51,7 @@ export class ReplyService {
 
   replyWhere() {
     const uid = this.adminService.admin.uid;
-    return this.db.collection('linebot/1602425210/reply', ref => ref.where('allowUsers', 'array-contains', uid)).get();
+    const channelID = this.adminService.admin.channelID;
+    return this.db.collection(`linebot/${channelID}/reply`, ref => ref.where('allowUsers', 'array-contains', uid)).get();
   }
 }

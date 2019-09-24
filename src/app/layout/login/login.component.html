@@ -1,17 +1,21 @@
-<p>login works!</p>
-<ng-container *ngIf="adminService.admin !== null">
+<div class="container mtop">
+  <!-- <ng-container *ngIf="adminService.admin !== null">
     {{ adminService.admin | json }}
-  <form class="example-form">
-    <mat-form-field class="example-full-width">
-      <input matInput placeholder="Favorite food" name="momo" [(ngModel)]="adminService.admin.name">
-    </mat-form-field>
-    <button mat-raised-button color="primary" (click)="adminService.adminUpdate()">Update</button>
-  </form>
-</ng-container>
+    <form class="example-form">
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Favorite food" name="momo" [(ngModel)]="adminService.admin.name">
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="adminService.adminUpdate()">Update</button>
+    </form>
+  </ng-container> -->
+  <div *ngIf="adminService.admin !== null">
+    <p>如果帳號異常，請切換帳號或是聯絡管理員。</p>
+    <p>管理員：劉振維</p>
+    <p>管理員電話：0986192292</p>
+    <p>管理員信箱：q11295@gmail.com</p>
+  </div>
+  <firebase-ui (signInSuccessWithAuthResult)="successCallback($event)" (signInFailure)="errorCallback($event)">
+  </firebase-ui>
 
-<firebase-ui (signInSuccessWithAuthResult)="successCallback($event)" (signInFailure)="errorCallback($event)">
-</firebase-ui>
-
-
-
-<button (click)="logout()">Logout</button>
+  <button *ngIf="adminService.admin !== null" mat-raised-button color="accent" class="btn-block" (click)="logout()">登出</button>
+</div>

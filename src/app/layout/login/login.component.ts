@@ -19,15 +19,15 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.adminService.adminGetByAuthState();
+    // this.adminService.adminGetByAuthState();
   }
 
   successCallback(succ: FirebaseUISignInSuccessWithAuthResult) {
     const userUid = succ.authResult.user.uid;
-    this.db.collection('linebot/1602425210/admin').doc(userUid).get().subscribe(
+    this.db.collection('/admin').doc(userUid).get().subscribe(
       (v) => {
         let admin = v.data();
-        if (admin === undefined) {
+        if (v.exists === false) {
           admin = {
             uid: userUid,
             displayName: succ.authResult.user.displayName,
@@ -37,10 +37,11 @@ export class LoginComponent implements OnInit {
             phoneNumber: succ.authResult.user.phoneNumber,
             photoURL: succ.authResult.user.photoURL,
             role: '0',
+            channelID: '',
           };
-          this.db.collection('linebot/1602425210/admin').doc(userUid).set(admin);
+          this.db.collection('admin').doc(userUid).set(admin);
         }
-        this.router.navigateByUrl(this.adminService.redirectUrl);
+        this.router.navigateByUrl('/replyList');
       }
     );
   }

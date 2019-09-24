@@ -1,5 +1,51 @@
-<p>reply-edit works!</p>
-<pre>
-  {{reply | async | json}}
-  {{(reply | async)?.template.text}}
-</pre>
+<div class="container mtop" *ngIf="reply !== undefined">
+  <mat-form-field>
+    <input matInput placeholder="關鍵字" name=" keyword" [(ngModel)]="reply.keyword">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>回覆樣式</mat-label>
+    <mat-select [(value)]="reply.template.type" (selectionChange)="changeTemplate($event)">
+      <mat-option *ngFor="let replyType of replyTypes" [value]="replyType.type">
+        {{replyType.zh}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <ng-container *ngIf="reply.template.type === 'text'">
+    <mat-form-field>
+      <input matInput placeholder="文字" name="template.text" [(ngModel)]="reply.template.text">
+    </mat-form-field>
+  </ng-container>
+
+  <ng-container *ngIf="reply.template.type === 'template'">
+    <mat-form-field>
+      <input matInput placeholder="內容*" name="template.template.text" [(ngModel)]="reply.template.template.text">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="標題(可無)" name="template.template.title" [(ngModel)]="reply.template.template.title">
+    </mat-form-field>
+
+    <ng-container *ngFor="let action of reply.template.template.actions;let i = index">
+      <button mat-raised-button color="warn" class="right" (click)="reply.template.template.actions.splice(i,1)">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <div class="flex-div">
+        <div class="flex-item">
+          <mat-form-field>
+            <input matInput placeholder="按鈕名稱" [name]="'label'+i" [(ngModel)]="action.label">
+          </mat-form-field>
+        </div>
+        <div class="flex-item">
+          <mat-form-field>
+            <input matInput placeholder="按鈕連結" [name]="'uri'+i" [(ngModel)]="action.uri">
+          </mat-form-field>
+        </div>
+      </div>
+    </ng-container>
+    <button mat-raised-button class="btn-block" *ngIf="reply.template.template.actions.length<4"
+      (click)="reply.template.template.actions.push({type: 'uri', label: '',uri: ''})">新增按鈕</button>
+  </ng-container>
+  <button mat-raised-button color="primary" class="btn-block" (click)="update()">更新</button>
+</div>
