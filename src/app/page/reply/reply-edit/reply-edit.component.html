@@ -20,15 +20,20 @@
 
   <ng-container *ngIf="reply.template.type === 'template'">
     <mat-form-field>
-      <input matInput placeholder="內容*" name="template.template.text" [(ngModel)]="reply.template.template.text">
+      <input matInput placeholder="內容*" name="text" [(ngModel)]="reply.template.template.text">
     </mat-form-field>
 
     <mat-form-field>
-      <input matInput placeholder="標題(可無)" name="template.template.title" [(ngModel)]="reply.template.template.title">
+      <input matInput placeholder="標題(可無)" name="title" [(ngModel)]="reply.template.template.title">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="圖片連結(可無)" name="thumbnailImageUrl"
+        [(ngModel)]="reply.template.template.thumbnailImageUrl">
     </mat-form-field>
 
     <ng-container *ngFor="let action of reply.template.template.actions;let i = index">
-      <button mat-raised-button color="warn" class="right" (click)="reply.template.template.actions.splice(i,1)">
+      <button mat-raised-button style="z-index: 5;" color="warn" class="right" (click)="reply.template.template.actions.splice(i,1)">
         <mat-icon>delete</mat-icon>
       </button>
       <div class="flex-div">
@@ -47,5 +52,7 @@
     <button mat-raised-button class="btn-block" *ngIf="reply.template.template.actions.length<4"
       (click)="reply.template.template.actions.push({type: 'uri', label: '',uri: ''})">新增按鈕</button>
   </ng-container>
-  <button mat-raised-button color="primary" class="btn-block" (click)="update()">更新</button>
+  <br>
+  <br>
+  <button mat-raised-button color="primary" class="btn-block mtop" (click)="update()">更新</button>
 </div>

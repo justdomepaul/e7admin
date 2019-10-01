@@ -1,3 +1,14 @@
+export interface Message {
+  zh: string;
+  type: string;
+  template: TextMessage | TemplateMessage;
+}
+
+export interface TextMessage {
+  type: 'text';
+  text: string;
+}
+
 export interface TemplateMessage {
   type: 'template';
   altText: string;

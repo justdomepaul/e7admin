@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ReplyService } from 'src/app/service/reply/reply.service';
-import { MatSelectChange } from '@angular/material';
+import { MatSelectChange, MatSnackBar } from '@angular/material';
+import { Message } from 'src/app/interface/line-bot-message';
 
 @Component({
   selector: 'app-reply-edit',
@@ -9,7 +10,7 @@ import { MatSelectChange } from '@angular/material';
   styleUrls: ['./reply-edit.component.scss']
 })
 export class ReplyEditComponent implements OnInit {
-  replyTypes = [
+  replyTypes: Message[] = [
     {
       type: 'text', zh: '文字回覆', template: { type: 'text', text: '' }
     },
@@ -21,6 +22,10 @@ export class ReplyEditComponent implements OnInit {
           type: 'buttons',
           text: '',
           title: '',
+          thumbnailImageUrl: '',
+          imageAspectRatio: 'rectangle',
+          imageSize: 'contain',
+          imageBackgroundColor: '#a8e8fb',
           actions: [
             {
               type: 'uri',
@@ -37,6 +42,7 @@ export class ReplyEditComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private replyService: ReplyService,
+    private snackBar: MatSnackBar,
   ) { }
 
   ngOnInit() {
@@ -52,11 +58,20 @@ export class ReplyEditComponent implements OnInit {
   }
 
   update() {
-    const reply = this.reply;
-    if (reply.template.type === 'template' && reply.template.template.title === '') {
-      delete reply.template.template.title;
+    const reply: Message = this.reply;
+    if (reply.template.type === 'template') {
+      if (reply.template.template.title === '') {
+        delete reply.template.template.title;
+      }
+      if (reply.template.template.thumbnailImageUrl === '') {
+        delete reply.template.template.thumbnailImageUrl;
+      }
     }
-    this.replyService.replyUpdateById(this.replyId, reply);
+    this.replyService.replyUpdateById(this.replyId, reply).then((result) => {
+      this.snackBar.open(' 更新成功', '', { duration: 2000 }).afterDismissed();
+    }).catch((err) => {
+
+    });
   }
 
   changeTemplate(event: MatSelectChange) {
