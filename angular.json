@@ -123,5 +123,8 @@
       }
     }
   },
-  "defaultProject": "e7admin"
+  "defaultProject": "e7admin",
+  "cli": {
+    "analytics": "79126883-2de3-414c-82af-75420831a203"
+  }
 }
