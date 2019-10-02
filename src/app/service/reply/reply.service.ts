@@ -54,6 +54,12 @@ export class ReplyService {
   replyWhere() {
     const uid = this.adminService.admin.uid;
     const channelID = this.adminService.admin.channelID;
+    if (this.adminService.admin.role === '1') {
+      return this.db.collection(`linebot/${channelID}/reply`, ref =>
+        ref.
+          where('status', '==', 1)
+      ).get();
+    }
     return this.db.collection(`linebot/${channelID}/reply`, ref =>
       ref.
         where('allowUsers', 'array-contains', uid).
