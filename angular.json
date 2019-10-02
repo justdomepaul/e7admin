@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "e7schoolAdmin": {
+    "e7admin": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/e7schoolAdmin",
+            "outputPath": "dist/e7admin",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -63,18 +63,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "e7schoolAdmin:build"
+            "browserTarget": "e7admin:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "e7schoolAdmin:build:production"
+              "browserTarget": "e7admin:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "e7schoolAdmin:build"
+            "browserTarget": "e7admin:build"
           }
         },
         "test": {
@@ -112,16 +112,16 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "e7schoolAdmin:serve"
+            "devServerTarget": "e7admin:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "e7schoolAdmin:serve:production"
+              "devServerTarget": "e7admin:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "e7schoolAdmin"
+  "defaultProject": "e7admin"
 }

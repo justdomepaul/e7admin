@@ -19,8 +19,10 @@
   </ng-container>
 
   <ng-container *ngIf="reply.template.type === 'template'">
-    <mat-form-field>
-      <input matInput placeholder="內容*" name="text" [(ngModel)]="reply.template.template.text">
+    <mat-form-field appearance="outline">
+      <mat-label>內容*</mat-label>
+      <textarea matInput placeholder="內容*" style="min-height: 75px;" name="text"
+        [(ngModel)]="reply.template.template.text"></textarea>
     </mat-form-field>
 
     <mat-form-field>
@@ -33,18 +35,34 @@
     </mat-form-field>
 
     <ng-container *ngFor="let action of reply.template.template.actions;let i = index">
-      <button mat-raised-button style="z-index: 5;" color="warn" class="right" (click)="reply.template.template.actions.splice(i,1)">
-        <mat-icon>delete</mat-icon>
+      <button mat-raised-button class="right menuBtn" [matMenuTriggerFor]="menu">
+        <mat-icon>more_vert</mat-icon>
       </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="reply.template.template.actions.splice(i,1)">
+          <mat-icon>delete</mat-icon> 刪除按鈕
+        </button>
+        <button mat-menu-item (click)="reply.template.template.actions[i] = {type: 'message', label: action.label,text: ''}">
+          <mat-icon>translate</mat-icon> 切換文字
+        </button>
+        <button mat-menu-item (click)="reply.template.template.actions[i] = {type: 'uri', label: action.label,uri: ''}">
+          <mat-icon>link</mat-icon> 切換連結
+        </button>
+      </mat-menu>
       <div class="flex-div">
         <div class="flex-item">
           <mat-form-field>
             <input matInput placeholder="按鈕名稱" [name]="'label'+i" [(ngModel)]="action.label">
           </mat-form-field>
         </div>
-        <div class="flex-item">
+        <div class="flex-item" *ngIf="action.type === 'uri'">
           <mat-form-field>
             <input matInput placeholder="按鈕連結" [name]="'uri'+i" [(ngModel)]="action.uri">
+          </mat-form-field>
+        </div>
+        <div class="flex-item" *ngIf="action.type === 'message'">
+          <mat-form-field>
+            <input matInput placeholder="文字" [name]="'text'+i" [(ngModel)]="action.text">
           </mat-form-field>
         </div>
       </div>
