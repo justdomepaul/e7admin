@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AdminService } from '../admin/admin.service';
 import { MatSnackBar } from '@angular/material';
+import { Reply } from 'src/app/interface/reply';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class ReplyService {
     return this.db.collection(`linebot/${channelID}/reply`).doc(replyId).valueChanges();
   }
 
-  replyUpdateById(replyId: string, reply: any) {
+  replyUpdateById(replyId: string, reply: Reply) {
     const channelID = this.adminService.admin.channelID;
     return this.db.collection(`linebot/${channelID}/reply`).doc(replyId).update(reply);
   }
@@ -38,7 +39,8 @@ export class ReplyService {
                 type: 'text',
                 text: newKeyword,
               },
-            });
+              status: 1,
+            } as Reply);
           } else {
             this.snackBar.open(newKeyword + ' 關鍵字已經存在', '', { duration: 2000 }).afterDismissed();
           }
@@ -52,6 +54,10 @@ export class ReplyService {
   replyWhere() {
     const uid = this.adminService.admin.uid;
     const channelID = this.adminService.admin.channelID;
-    return this.db.collection(`linebot/${channelID}/reply`, ref => ref.where('allowUsers', 'array-contains', uid)).get();
+    return this.db.collection(`linebot/${channelID}/reply`, ref =>
+      ref.
+        where('allowUsers', 'array-contains', uid).
+        where('status', '==', 1)
+    ).get();
   }
 }

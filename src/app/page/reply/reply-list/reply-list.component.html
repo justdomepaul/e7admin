@@ -3,13 +3,24 @@
     新增自動回覆
     <mat-icon>add</mat-icon>
   </button>
-
-  <ng-container *ngFor="let reply of replyLists">
-    <mat-list-item>
-      <a [routerLink]="[ '/replyList', 'edit',reply.id ]">
-        <h4 mat-line>{{reply.data.keyword}}</h4>
-      </a>
-    </mat-list-item>
-    <mat-divider></mat-divider>
-  </ng-container>
+  <mat-list role="list">
+    <ng-container *ngFor="let reply of replyLists">
+      <mat-list-item>
+        <p mat-line style="padding: 5px;">
+          <a [routerLink]="[ '/replyList', 'edit',reply.id ]">
+            {{reply.data.keyword}}
+          </a>
+          <button mat-raised-button class="right menuBtn" [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="delReply(reply)">
+              <mat-icon>delete</mat-icon> 刪除回覆
+            </button>
+          </mat-menu>
+        </p>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+    </ng-container>
+  </mat-list>
 </div>

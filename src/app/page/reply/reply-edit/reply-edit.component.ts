@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ReplyService } from 'src/app/service/reply/reply.service';
 import { MatSelectChange, MatSnackBar } from '@angular/material';
-import { Message } from 'src/app/interface/line-bot-message';
+import { MessageE7 } from 'src/app/interface/line-bot-message';
+import { Reply } from 'src/app/interface/reply';
 
 @Component({
   selector: 'app-reply-edit',
@@ -10,7 +11,9 @@ import { Message } from 'src/app/interface/line-bot-message';
   styleUrls: ['./reply-edit.component.scss']
 })
 export class ReplyEditComponent implements OnInit {
-  replyTypes: Message[] = [
+  reply: Reply;
+
+  replyTypes: MessageE7[] = [
     {
       type: 'text', zh: '文字回覆', template: { type: 'text', text: '' }
     },
@@ -37,7 +40,6 @@ export class ReplyEditComponent implements OnInit {
       },
     }
   ];
-  reply;
   replyId;
   constructor(
     private route: ActivatedRoute,
@@ -50,7 +52,7 @@ export class ReplyEditComponent implements OnInit {
     this.replyId = this.route.snapshot.params.replyId;
     // this.reply = this.replyService.replyGetById(replyId);
     this.replyService.replyGetById(this.replyId).subscribe(
-      (v) => {
+      (v: Reply) => {
         console.log('v', v);
         this.reply = v;
       },
@@ -58,7 +60,7 @@ export class ReplyEditComponent implements OnInit {
   }
 
   update() {
-    const reply: Message = this.reply;
+    const reply: Reply = this.reply;
     if (reply.template.type === 'template') {
       if (reply.template.template.title === '') {
         delete reply.template.template.title;

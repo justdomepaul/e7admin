@@ -1,8 +1,10 @@
-export interface Message {
+export interface MessageE7 {
   zh: string;
-  type: string;
+  type: 'text' | 'template';
   template: TextMessage | TemplateMessage;
 }
+
+export type Message = TextMessage | TemplateMessage;
 
 export interface TextMessage {
   type: 'text';
